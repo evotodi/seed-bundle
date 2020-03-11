@@ -1,4 +1,5 @@
 
+[![Build Status](https://travis-ci.org/evotodi/seed-bundle.svg?branch=master)](https://travis-ci.org/evotodi/seed-bundle)
 
 # Symfony/Doctrine Seed Bundle
 
