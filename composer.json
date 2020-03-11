@@ -15,17 +15,18 @@
     ],
     "require": {
         "php": "^7.2",
-        "symfony/framework-bundle": "^4.0",
-        "symfony/console": "^4.0",
-        "symfony/finder": "^4.0",
+        "symfony/framework-bundle": "^4.4",
+        "symfony/console": "^4.4",
+        "symfony/finder": "^4.4",
         "doctrine/doctrine-bundle": "^1.12",
-        "doctrine/orm": "^2.7"
+        "doctrine/orm": "^2.7",
+        "symfony/yaml": "4.4.*"
     },
     "require-dev": {
         "symfony/config": "^4.4",
         "symfony/dependency-injection": "^4.4",
-        "symfony/phpunit-bridge": "^4.4",
-        "symfony/yaml": "4.4.*"
+        "symfony/phpunit-bridge": "^4.4"
+
     },
     "autoload": {
         "psr-4": {
