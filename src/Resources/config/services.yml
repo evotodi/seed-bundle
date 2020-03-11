@@ -1,0 +1,31 @@
+services:
+    seed.loader:
+        class: 'Evotodi\SeedBundle\Core\Loader'
+        calls:
+            - [ setContainer, [ '@service_container' ] ]
+        public: true
+
+    seed.seeds:
+        class: 'Evotodi\SeedBundle\Core\Seeds'
+
+    seed.load_seeds_command:
+        class: 'Evotodi\SeedBundle\Command\LoadSeedsCommand'
+        parent: 'seed.seeds'
+        tags: [ { name: 'console.command' } ]
+        public: true
+
+    seed.unload_seeds_command:
+        class: 'Evotodi\SeedBundle\Command\UnloadSeedsCommand'
+        parent: 'seed.seeds'
+        tags: [ { name: 'console.command' } ]
+        public: true
+
+    seed.extension.skip:
+        class: 'Evotodi\SeedBundle\Extensions\Skip'
+        tags: [ {name: 'seed.extension', priority: 1 } ]
+    seed.extension.order:
+        class: 'Evotodi\SeedBundle\Extensions\Order'
+        tags: [ {name: 'seed.extension', priority: 1 } ]
+    seed.extension.matches:
+        class: 'Evotodi\SeedBundle\Extensions\Matches'
+        tags: [ {name: 'seed.extension', priority: 0 } ]

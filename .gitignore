@@ -1,0 +1,13 @@
+/vendor/
+
+composer\.lock
+
+bin/
+
+build/logs/
+/tests/Controller/cache/
+/tests/cache/
+/config/
+.idea/
+var/
+/tests/App/cache/

@@ -1,0 +1,40 @@
+{
+    "name": "evotodi/seed-bundle",
+    "description": "Database seeder for symfony 4",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "evotodi",
+            "email": "evotodi@gmail.com"
+        },
+        {
+            "name": "Soyuka",
+            "email": "soyuka@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.2",
+        "symfony/framework-bundle": "^4.0",
+        "symfony/console": "^4.0",
+        "symfony/finder": "^4.0",
+        "doctrine/doctrine-bundle": "^1.12",
+        "doctrine/orm": "^2.7"
+    },
+    "require-dev": {
+        "symfony/config": "^4.4",
+        "symfony/dependency-injection": "^4.4",
+        "symfony/phpunit-bridge": "^4.4",
+        "symfony/yaml": "4.4.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Evotodi\\SeedBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Evotodi\\SeedBundle\\Tests\\": "tests/"
+        }
+    }
+}
