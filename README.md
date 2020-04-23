@@ -85,11 +85,13 @@ class UserSeed extends Seed
         }
         $this->manager->flush();
         $this->manager->clear();
+        return 0; //Must return an exit code
     }
     
     public function unload(InputInterface $input, OutputInterface $output){
         //Clear the table
         $this->manager->getConnection()->exec('DELETE FROM user');
+        return 0; //Must return an exit code
     }
 
     public function getOrder(): int 
@@ -129,3 +131,9 @@ Please create detailed issues and PRs.
 ## Licence
 
 This package is free software distributed under the terms of the [MIT license](LICENSE).
+
+## Updates
+* 2020-04-23
+    * Updated dependencies to allow for Symfony 4.4.* and 5.0.*
+    * Added a required return exit code to load and unload functions
+    * Updated tests to reflect required return code

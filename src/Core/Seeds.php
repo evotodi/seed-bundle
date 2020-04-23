@@ -65,7 +65,7 @@ EOT;
      * @see LoadSeedsCommand
      * @see UnloadSeedsCommand
      */
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
         $break = $input->getOption('break');
         $debug = $input->getOption('debug');

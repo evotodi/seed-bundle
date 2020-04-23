@@ -21,12 +21,14 @@ class StreetSeed extends Seed implements SeedInterface
     {
         $this->disableDoctrineLogging();
         $output->writeln('Load street');
+	    return 0;
     }
 
     public function unload(InputInterface $input, OutputInterface $output)
     {
         $this->disableDoctrineLogging();
         $output->writeln('Unload street');
+	    return 0;
     }
 
     public function getOrder(): int

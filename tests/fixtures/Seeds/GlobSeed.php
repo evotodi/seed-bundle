@@ -20,10 +20,12 @@ class GlobSeed extends Seed implements SeedInterface
     public function load(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('Load foo:bar');
+	    return 0;
     }
 
     public function unload(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('Unload foo:bar');
+	    return 0;
     }
 }

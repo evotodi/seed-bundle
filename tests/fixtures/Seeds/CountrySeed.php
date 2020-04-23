@@ -20,12 +20,14 @@ class CountrySeed extends Seed implements SeedInterface
     {
         $this->disableDoctrineLogging();
         $output->writeln('Load country');
+	    return 0;
     }
 
     public function unload(InputInterface $input, OutputInterface $output)
     {
         $this->disableDoctrineLogging();
         $output->writeln('Unload country');
+	    return 0;
     }
 
     public function getOrder(): int

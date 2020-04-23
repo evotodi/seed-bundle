@@ -21,12 +21,14 @@ class TownSeed extends Seed implements SeedInterface
     {
         $this->disableDoctrineLogging();
         $output->writeln('Load town');
+	    return 0;
     }
 
     public function unload(InputInterface $input, OutputInterface $output)
     {
         $this->disableDoctrineLogging();
         $output->writeln('Unload town');
+	    return 0;
     }
 
     public function getOrder(): int

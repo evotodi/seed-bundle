@@ -21,12 +21,14 @@ class PostcodeSeed extends Seed implements SeedInterface
     {
         $this->disableDoctrineLogging();
         $output->writeln('Load postcode');
+	    return 0;
     }
 
     public function unload(InputInterface $input, OutputInterface $output)
     {
         $this->disableDoctrineLogging();
         $output->writeln('Unload postcode');
+	    return 0;
     }
 
     public function getOrder(): int
