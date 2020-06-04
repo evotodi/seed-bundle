@@ -1,6 +1,8 @@
 # Tests/Controller/App/config.yml
 framework:
     secret: 'test'
+    router:
+        utf8: true
 doctrine:
     dbal:
         memory: true
