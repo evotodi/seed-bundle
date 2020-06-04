@@ -21,7 +21,7 @@ evo_seed:
 ```
 
 (optional) load seeds as services `config/services.yaml`  
-In Symfony 4.4 default services.yaml classes in src/ are loaded as services, so creating a folder src/Seeds/ will load the seeds as services. 
+In Symfony default services.yaml classes in src/ are loaded as services, so creating a folder src/Seeds/ will load the seeds as services. 
 ```yaml
 services:
     Evotodi\SeedBundle\DataSeeds\:
@@ -133,6 +133,8 @@ Please create detailed issues and PRs.
 This package is free software distributed under the terms of the [MIT license](LICENSE).
 
 ## Updates
+* 2020-06-03
+    * Updated dependencies to allow for Symfony 4.4.* and 5.0.* and 5.1.*
 * 2020-04-23
     * Updated dependencies to allow for Symfony 4.4.* and 5.0.*
     * Added a required return exit code to load and unload functions
