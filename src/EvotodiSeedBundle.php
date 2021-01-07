@@ -5,7 +5,6 @@ namespace Evotodi\SeedBundle;
 
 use Evotodi\SeedBundle\DependencyInjection\Compiler\ExtensionPass;
 use Evotodi\SeedBundle\DependencyInjection\EvotodiSeedExtension;
-use ReflectionException;
 use Symfony\Component\Console\Application;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -23,8 +22,7 @@ class EvotodiSeedBundle extends Bundle
 
 	/**
 	 * @param Application $application
-	 * @throws ReflectionException
-	 */
+     */
 	public function registerCommands(Application $application)
 	{
 		$seeds = $this->container->get('seed.loader');

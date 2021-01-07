@@ -46,7 +46,7 @@ class Skip implements SeedExtensionInterface, AlterationExtensionInterface, Conf
     /**
      * {@inheritdoc}
      */
-    public function getHelp()
+    public function getHelp(): string
     {
         return <<<EOT
    

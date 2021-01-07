@@ -19,17 +19,13 @@ class SeedCommandTest extends TestCase
 	 * @var Application
 	 */
 	private $application;
-	/**
-	 * @var AppKernel
-	 */
-	private $kernel;
 
-	protected function setUp():void
+    protected function setUp():void
     {
-	    $this->kernel = new AppKernel();
-	    $this->kernel->boot();
-	    $this->container = $this->kernel->getContainer();
-	    $this->application = new Application($this->kernel);
+	    $kernel = new AppKernel();
+	    $kernel->boot();
+	    $this->container = $kernel->getContainer();
+	    $this->application = new Application($kernel);
         $this->seedsLoader();
     }
 
@@ -60,6 +56,6 @@ class SeedCommandTest extends TestCase
         $commandTester = new CommandTester($command);
         $commandTester->execute(['command' => $command->getName(), 'method' => 'nonexistant']);
 
-        $this->assertEquals($commandTester->getStatusCode(), 1);
+        $this->assertEquals(1, $commandTester->getStatusCode());
     }
 }

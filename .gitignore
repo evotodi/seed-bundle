@@ -11,3 +11,4 @@ build/logs/
 .idea/
 var/
 /tests/App/cache/
+/tests/App/App/config.yml

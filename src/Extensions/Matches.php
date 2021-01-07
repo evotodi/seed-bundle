@@ -23,11 +23,10 @@ class Matches implements SeedExtensionInterface, AlterationExtensionInterface, C
         }
 
         //Lowercase seeds names
-        if ($seeds) {
-            $seeds = array_map(function ($v) {
-                return strtolower($v);
-            }, $seeds);
-        }
+        $seeds = array_map(function ($v) {
+            return strtolower($v);
+        }, $seeds);
+
 
         foreach ($commands as $key => $command) {
             if (!$this->match($command->getSeedName(), $seeds)) {
@@ -36,14 +35,14 @@ class Matches implements SeedExtensionInterface, AlterationExtensionInterface, C
         }
     }
 
-	/**
-	 * Tests if a seed name is in the seeds array.
-	 *
-	 * @param string $name
-	 * @param array $seeds
-	 * @return bool
-	 */
-    private function match($name, $seeds)
+    /**
+     * Tests if a seed name is in the seeds array.
+     *
+     * @param string $name
+     * @param array $seeds
+     * @return bool
+     */
+    private function match(string $name, $seeds): bool
     {
         foreach ($seeds as $choice) {
             if ($choice === $name) {
@@ -72,7 +71,7 @@ class Matches implements SeedExtensionInterface, AlterationExtensionInterface, C
     /**
      * {@inheritdoc}
      */
-    public function getHelp()
+    public function getHelp(): string
     {
         return <<<EOT
 You can specify seeds:
