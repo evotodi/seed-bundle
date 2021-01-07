@@ -56,7 +56,7 @@ class SeedsCommandTest extends TestCase
         $commandTester->execute(['command' => $command->getName(), '--skip' => ['foo:bar', 'country', 'town', 'street', 'postcode']]);
 
         $this->assertRegExp('/No seeds/', $commandTester->getDisplay());
-        $this->assertEquals($commandTester->getStatusCode(), 1);
+        $this->assertEquals(1, $commandTester->getStatusCode());
     }
 
     public function testLoadSeeds()
@@ -74,7 +74,7 @@ class SeedsCommandTest extends TestCase
         $this->assertRegExp('/Load town/', $output);
         $this->assertRegExp('/Load street/', $output);
         $this->assertRegExp('/Load postcode/', $output);
-        $this->assertEquals($commandTester->getStatusCode(), 0);
+        $this->assertEquals(0, $commandTester->getStatusCode());
 
     }
 
@@ -93,7 +93,7 @@ class SeedsCommandTest extends TestCase
         $this->assertRegExp('/Unload town/', $output);
         $this->assertRegExp('/Unload street/', $output);
         $this->assertRegExp('/Unload postcode/', $output);
-        $this->assertEquals($commandTester->getStatusCode(), 0);
+        $this->assertEquals(0, $commandTester->getStatusCode());
     }
 
     public function testNamedSeeds()
@@ -111,7 +111,7 @@ class SeedsCommandTest extends TestCase
         $this->assertNotRegExp('/Load town/', $output);
         $this->assertNotRegExp('/Load street/', $output);
         $this->assertNotRegExp('/Load postcode/', $output);
-        $this->assertEquals($commandTester->getStatusCode(), 0);
+        $this->assertEquals(0, $commandTester->getStatusCode());
     }
 
     public function testGlobSeeds()
@@ -126,7 +126,7 @@ class SeedsCommandTest extends TestCase
         $output = $commandTester->getDisplay();
 
         $this->assertRegExp('/Load foo:bar/', $output);
-        $this->assertEquals($commandTester->getStatusCode(), 0);
+        $this->assertEquals(0, $commandTester->getStatusCode());
     }
 
     public function testSkipSeeds()
@@ -144,7 +144,7 @@ class SeedsCommandTest extends TestCase
         $this->assertNotRegExp('/Load town/', $output);
         $this->assertRegExp('/Load street/', $output);
         $this->assertRegExp('/Load postcode/', $output);
-        $this->assertEquals($commandTester->getStatusCode(), 0);
+        $this->assertEquals(0, $commandTester->getStatusCode());
     }
 
     public function testBadSeed()
@@ -172,7 +172,7 @@ class SeedsCommandTest extends TestCase
         $this->assertNotRegExp('/Load street/', $output);
         $this->assertNotRegExp('/Load postcode/', $output);
         $this->assertRegExp('/seed:fail failed/', $output);
-        $this->assertEquals($commandTester->getStatusCode(), 1);
+        $this->assertEquals(1, $commandTester->getStatusCode());
     }
 
     public function testDebugSeed()
@@ -193,7 +193,7 @@ class SeedsCommandTest extends TestCase
         $this->assertRegExp('/Starting seed:town/', $output);
         $this->assertRegExp('/Starting seed:street/', $output);
         $this->assertRegExp('/Starting seed:postcode/', $output);
-        $this->assertEquals($commandTester->getStatusCode(), 0);
+        $this->assertEquals(0, $commandTester->getStatusCode());
     }
 
     public function testFromSeed()
@@ -211,7 +211,7 @@ class SeedsCommandTest extends TestCase
       $this->assertNotRegExp('/Load town/', $output);
       $this->assertRegExp('/Load street/', $output);
       $this->assertRegExp('/Load postcode/', $output);
-      $this->assertEquals($commandTester->getStatusCode(), 0);
+      $this->assertEquals(0, $commandTester->getStatusCode());
 
     }
 

@@ -36,8 +36,8 @@ class EvotodiSeedExtension extends Extension
         $loader->load('services.yml');
     }
 
-	public function getAlias()
-	{
+	public function getAlias(): string
+    {
 		return 'evo_seed';
 	}
 }

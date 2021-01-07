@@ -1,6 +1,6 @@
 {
     "name": "evotodi/seed-bundle",
-    "description": "Database seeder for symfony 4",
+    "description": "Database seeder for symfony 4/5",
     "type": "symfony-bundle",
     "license": "MIT",
     "authors": [
@@ -14,18 +14,18 @@
         }
     ],
     "require": {
-        "php": "7.*",
-        "symfony/framework-bundle": "4.4.*|5.0.*|5.1.*",
-        "symfony/console": "4.4.*|5.0.*|5.1.*",
-        "symfony/finder": "4.4.*|5.0.*|5.1.*",
+        "php": ">=7.1",
+        "symfony/framework-bundle": "4.4.*|5.0.*|5.1.*|5.2.*",
+        "symfony/console": "4.4.*|5.0.*|5.1.*|5.2.*",
+        "symfony/finder": "4.4.*|5.0.*|5.1.*|5.2.*",
         "doctrine/doctrine-bundle": "^1.0|^2.0",
         "doctrine/orm": "^2.7",
-        "symfony/yaml": "4.4.*|5.0.*|5.1.*"
+        "symfony/yaml": "4.4.*|5.0.*|5.1.*|5.2.*"
     },
     "require-dev": {
-        "symfony/config": "4.4.*|5.0.*|5.1.*",
-        "symfony/dependency-injection": "4.4.*|5.0.*|5.1.*",
-        "symfony/phpunit-bridge": "4.4.*|5.0.*|5.1.*"
+        "symfony/config": "4.4.*|5.0.*|5.1.*|5.2.*",
+        "symfony/dependency-injection": "4.4.*|5.0.*|5.1.*|5.2.*",
+        "symfony/phpunit-bridge": "4.4.*|5.0.*|5.1.*|5.2.*"
 
     },
     "autoload": {

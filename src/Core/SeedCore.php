@@ -39,15 +39,15 @@ class SeedCore extends Command
 		return $this->manager;
 	}
 
-	/**
-	 * setSeedName
-	 * Protected because is should only be called by the children class extending
-	 * this one.
-	 *
-	 * @param string $name
-	 * @return SeedCore
-	 */
-    protected function setSeedName($name)
+    /**
+     * setSeedName
+     * Protected because is should only be called by the children class extending
+     * this one.
+     *
+     * @param string $name
+     * @return SeedCore
+     */
+    protected function setSeedName(string $name): SeedCore
     {
         $this->seedName = $name;
         return $this;
@@ -110,7 +110,7 @@ class SeedCore extends Command
 	 *
 	 * @return SeedCore
 	 */
-    protected function disableDoctrineLogging()
+    protected function disableDoctrineLogging(): SeedCore
     {
         $this->container->get('doctrine')
             ->getConnection()
