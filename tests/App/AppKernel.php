@@ -21,7 +21,7 @@ class AppKernel extends Kernel
 		parent::__construct('test', true);
 	}
 
-    public function registerBundles()
+    public function registerBundles(): array
     {
         $bundles = array(
             new FrameworkBundle(),
@@ -32,8 +32,8 @@ class AppKernel extends Kernel
         return $bundles;
     }
 
-	public function getCacheDir()
-	{
+	public function getCacheDir(): string
+    {
 		return __DIR__.'/cache/'.spl_object_hash($this);
 	}
 

@@ -133,6 +133,8 @@ Please create detailed issues and PRs.
 This package is free software distributed under the terms of the [MIT license](LICENSE).
 
 ## Updates
+* 2021-12-06
+    * Updated dependencies to allow for symfony 5.3 and 5.4
 * 2020-06-03
     * Updated dependencies to allow for Symfony 4.4.* and 5.0.* and 5.1.*
 * 2020-04-23

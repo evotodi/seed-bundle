@@ -11,14 +11,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class SeedCommandTest extends TestCase
 {
-	/**
-	 * @var ContainerInterface
-	 */
-	private $container;
-	/**
-	 * @var Application
-	 */
-	private $application;
+	private ContainerInterface $container;
+	private Application $application;
 
     protected function setUp():void
     {
