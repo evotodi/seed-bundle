@@ -54,7 +54,7 @@ class UserSeed extends Seed
     protected function configure()
     {
         //The seed won't load if this is not set
-        //The resulting command will be {prefix}:country
+        //The resulting command will be {prefix}:mySeed
         $this->setSeedName('mySeed');
 
         parent::configure();
@@ -114,7 +114,7 @@ bin/console seed:mySeed #load is implied
 bin/console seed:mySeed unload
 ```
 
-The global `seed:load` and `seed:unload` allow you to run multiple seeds in one command. You can of course skip seeds `bin/console seed:load --skip Town` but also name the one you want `bin/console seed:load Country`. For more informations, please use `bin/console seed:load --help`.
+The global `seed:load` and `seed:unload` allow you to run multiple seeds in one command. You can of course skip seeds `bin/console seed:load --skip User` but also name the one you want `bin/console seed:load User`. For more informations, please use `bin/console seed:load --help`.
 
 ## Seed order
 
