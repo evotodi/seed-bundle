@@ -37,12 +37,8 @@ class Matches implements SeedExtensionInterface, AlterationExtensionInterface, C
 
     /**
      * Tests if a seed name is in the seeds array.
-     *
-     * @param string $name
-     * @param array $seeds
-     * @return bool
      */
-    private function match(string $name, $seeds): bool
+    private function match(string $name, array $seeds): bool
     {
         foreach ($seeds as $choice) {
             if ($choice === $name) {

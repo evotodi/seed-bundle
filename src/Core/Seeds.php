@@ -12,7 +12,7 @@ use Evotodi\SeedBundle\Model\ConfigurableExtensionInterface;
 
 abstract class Seeds extends Command
 {
-	private $extensions;
+	private array $extensions;
 
 	/**
 	 * __construct.
@@ -166,7 +166,6 @@ EOT;
             //is this a seed?
             if ($command instanceof SeedCore) {
                 $commands[] = $command;
-                continue;
             }
         }
 

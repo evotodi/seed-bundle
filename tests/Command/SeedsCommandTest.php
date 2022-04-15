@@ -5,6 +5,7 @@ namespace Evotodi\SeedBundle\Tests\Command;
 use Evotodi\SeedBundle\Tests\App\AppKernel;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 
 use Symfony\Component\Console\Tester\CommandTester;
@@ -14,24 +15,17 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class SeedsCommandTest extends TestCase
 {
-	/**
-	 * @var ContainerInterface
-	 */
-	private $container;
-	/**
-	 * @var Application
-	 */
-	private $application;
-	/**
-	 * @var AppKernel
-	 */
-	private $kernel;
+	private ContainerInterface $container;
+	private Application $application;
+	private AppKernel $kernel;
+    private ManagerRegistry $doctrine;
 
 	protected function setUp(): void
     {
 	    $this->kernel = new AppKernel();
 	    $this->kernel->boot();
 	    $this->container = $this->kernel->getContainer();
+        $this->doctrine = $this->container->get('doctrine');
 	    $this->application = new Application($this->kernel);
     }
 
@@ -55,7 +49,7 @@ class SeedsCommandTest extends TestCase
         $commandTester = new CommandTester($command);
         $commandTester->execute(['command' => $command->getName(), '--skip' => ['foo:bar', 'country', 'town', 'street', 'postcode']]);
 
-        $this->assertRegExp('/No seeds/', $commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/No seeds/', $commandTester->getDisplay());
         $this->assertEquals(1, $commandTester->getStatusCode());
     }
 
@@ -70,10 +64,10 @@ class SeedsCommandTest extends TestCase
 
         $output = $commandTester->getDisplay();
 
-        $this->assertRegExp('/Load country/', $output);
-        $this->assertRegExp('/Load town/', $output);
-        $this->assertRegExp('/Load street/', $output);
-        $this->assertRegExp('/Load postcode/', $output);
+        $this->assertMatchesRegularExpression('/Load country/', $output);
+        $this->assertMatchesRegularExpression('/Load town/', $output);
+        $this->assertMatchesRegularExpression('/Load street/', $output);
+        $this->assertMatchesRegularExpression('/Load postcode/', $output);
         $this->assertEquals(0, $commandTester->getStatusCode());
 
     }
@@ -89,10 +83,10 @@ class SeedsCommandTest extends TestCase
 
         $output = $commandTester->getDisplay();
 
-        $this->assertRegExp('/Unload country/', $output);
-        $this->assertRegExp('/Unload town/', $output);
-        $this->assertRegExp('/Unload street/', $output);
-        $this->assertRegExp('/Unload postcode/', $output);
+        $this->assertMatchesRegularExpression('/Unload country/', $output);
+        $this->assertMatchesRegularExpression('/Unload town/', $output);
+        $this->assertMatchesRegularExpression('/Unload street/', $output);
+        $this->assertMatchesRegularExpression('/Unload postcode/', $output);
         $this->assertEquals(0, $commandTester->getStatusCode());
     }
 
@@ -107,10 +101,10 @@ class SeedsCommandTest extends TestCase
 
         $output = $commandTester->getDisplay();
 
-        $this->assertRegExp('/Load country/', $output);
-        $this->assertNotRegExp('/Load town/', $output);
-        $this->assertNotRegExp('/Load street/', $output);
-        $this->assertNotRegExp('/Load postcode/', $output);
+        $this->assertMatchesRegularExpression('/Load country/', $output);
+        $this->assertDoesNotMatchRegularExpression('/Load town/', $output);
+        $this->assertDoesNotMatchRegularExpression('/Load street/', $output);
+        $this->assertDoesNotMatchRegularExpression('/Load postcode/', $output);
         $this->assertEquals(0, $commandTester->getStatusCode());
     }
 
@@ -125,7 +119,7 @@ class SeedsCommandTest extends TestCase
 
         $output = $commandTester->getDisplay();
 
-        $this->assertRegExp('/Load foo:bar/', $output);
+        $this->assertMatchesRegularExpression('/Load foo:bar/', $output);
         $this->assertEquals(0, $commandTester->getStatusCode());
     }
 
@@ -140,10 +134,10 @@ class SeedsCommandTest extends TestCase
 
         $output = $commandTester->getDisplay();
 
-        $this->assertRegExp('/Load country/', $output);
-        $this->assertNotRegExp('/Load town/', $output);
-        $this->assertRegExp('/Load street/', $output);
-        $this->assertRegExp('/Load postcode/', $output);
+        $this->assertMatchesRegularExpression('/Load country/', $output);
+        $this->assertDoesNotMatchRegularExpression('/Load town/', $output);
+        $this->assertMatchesRegularExpression('/Load street/', $output);
+        $this->assertMatchesRegularExpression('/Load postcode/', $output);
         $this->assertEquals(0, $commandTester->getStatusCode());
     }
 
@@ -151,6 +145,7 @@ class SeedsCommandTest extends TestCase
     {
     	$this->expectException(InvalidArgumentException::class);
         $application = new Application($this->kernel);
+        /** @noinspection PhpParamsInspection */
         $application->add(new BadSeed($this->container->getParameter('seed.prefix')));
     }
 
@@ -158,7 +153,7 @@ class SeedsCommandTest extends TestCase
     {
         $this->seedsLoader();
 
-        $this->application->add(new FailSeed($this->container));
+        $this->application->add(new FailSeed($this->doctrine));
 
         $command = $this->application->find('seed:load');
 
@@ -167,11 +162,11 @@ class SeedsCommandTest extends TestCase
 
         $output = $commandTester->getDisplay();
 
-        $this->assertNotRegExp('/Load country/', $output);
-        $this->assertNotRegExp('/Load town/', $output);
-        $this->assertNotRegExp('/Load street/', $output);
-        $this->assertNotRegExp('/Load postcode/', $output);
-        $this->assertRegExp('/seed:fail failed/', $output);
+        $this->assertDoesNotMatchRegularExpression('/Load country/', $output);
+        $this->assertDoesNotMatchRegularExpression('/Load town/', $output);
+        $this->assertDoesNotMatchRegularExpression('/Load street/', $output);
+        $this->assertDoesNotMatchRegularExpression('/Load postcode/', $output);
+        $this->assertMatchesRegularExpression('/seed:fail failed/', $output);
         $this->assertEquals(1, $commandTester->getStatusCode());
     }
 
@@ -185,14 +180,14 @@ class SeedsCommandTest extends TestCase
 
         $output = $commandTester->getDisplay();
 
-        $this->assertNotRegExp('/Load country/', $output);
-        $this->assertNotRegExp('/Load town/', $output);
-        $this->assertNotRegExp('/Load street/', $output);
-        $this->assertNotRegExp('/Load postcode/', $output);
-        $this->assertRegExp('/Starting seed:country/', $output);
-        $this->assertRegExp('/Starting seed:town/', $output);
-        $this->assertRegExp('/Starting seed:street/', $output);
-        $this->assertRegExp('/Starting seed:postcode/', $output);
+        $this->assertDoesNotMatchRegularExpression('/Load country/', $output);
+        $this->assertDoesNotMatchRegularExpression('/Load town/', $output);
+        $this->assertDoesNotMatchRegularExpression('/Load street/', $output);
+        $this->assertDoesNotMatchRegularExpression('/Load postcode/', $output);
+        $this->assertMatchesRegularExpression('/Starting seed:country/', $output);
+        $this->assertMatchesRegularExpression('/Starting seed:town/', $output);
+        $this->assertMatchesRegularExpression('/Starting seed:street/', $output);
+        $this->assertMatchesRegularExpression('/Starting seed:postcode/', $output);
         $this->assertEquals(0, $commandTester->getStatusCode());
     }
 
@@ -207,10 +202,10 @@ class SeedsCommandTest extends TestCase
 
       $output = $commandTester->getDisplay();
 
-      $this->assertNotRegExp('/Load country/', $output);
-      $this->assertNotRegExp('/Load town/', $output);
-      $this->assertRegExp('/Load street/', $output);
-      $this->assertRegExp('/Load postcode/', $output);
+      $this->assertDoesNotMatchRegularExpression('/Load country/', $output);
+      $this->assertDoesNotMatchRegularExpression('/Load town/', $output);
+      $this->assertMatchesRegularExpression('/Load street/', $output);
+      $this->assertMatchesRegularExpression('/Load postcode/', $output);
       $this->assertEquals(0, $commandTester->getStatusCode());
 
     }

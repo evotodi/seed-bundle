@@ -12,3 +12,4 @@ build/logs/
 var/
 /tests/App/cache/
 /tests/App/App/config.yml
+/.phpunit.result.cache

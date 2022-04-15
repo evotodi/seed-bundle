@@ -12,8 +12,6 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 class EvotodiSeedExtension extends Extension
 {
 	/**
-	 * @param array $configs
-	 * @param ContainerBuilder $container
 	 * @throws Exception
 	 */
     public function load(array $configs, ContainerBuilder $container)

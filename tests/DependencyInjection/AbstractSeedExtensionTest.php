@@ -11,8 +11,8 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 abstract class AbstractSeedExtensionTest extends TestCase
 {
-    private $extension;
-    private $container;
+    private EvotodiSeedExtension $extension;
+    private ContainerBuilder $container;
 
     protected function setUp(): void
     {

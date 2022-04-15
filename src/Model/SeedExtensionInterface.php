@@ -9,10 +9,10 @@ interface SeedExtensionInterface
     /**
      * Apply the extension to the commands.
      *
-     * @param array          $commands the commands list
-     * @param InputInterface $input    the input
+     * $commands the commands list
+     * $input    the input
      *
-     * @return array $commands - the new commands list
+     * return the new commands list
      */
     public function apply(array &$commands, InputInterface $input);
 }

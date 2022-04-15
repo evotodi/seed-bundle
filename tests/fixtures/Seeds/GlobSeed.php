@@ -17,13 +17,13 @@ class GlobSeed extends Seed implements SeedInterface
         parent::configure();
     }
 
-    public function load(InputInterface $input, OutputInterface $output)
+    public function load(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('Load foo:bar');
 	    return 0;
     }
 
-    public function unload(InputInterface $input, OutputInterface $output)
+    public function unload(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('Unload foo:bar');
 	    return 0;

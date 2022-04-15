@@ -17,7 +17,7 @@ class ExtensionPass implements CompilerPassInterface
 
         foreach ($container->findTaggedServiceIds('seed.extension') as $serviceId => $tags) {
             foreach ($tags as $tag) {
-                $priority = isset($tag['priority']) ? $tag['priority'] : 0;
+                $priority = $tag['priority'] ?? 0;
                 $extensions[$priority][] = new Reference($serviceId);
             }
         }

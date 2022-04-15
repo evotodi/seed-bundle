@@ -5,7 +5,8 @@ namespace Evotodi\SeedBundle\Core;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
 use InvalidArgumentException;
-use Psr\Container\ContainerInterface;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -13,23 +14,15 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class SeedCore extends Command
 {
-    /** @var string **/
-    private $prefix = 'seed';
-    /** @var string **/
-    private $seedName;
-    /** @var ManagerRegistry **/
-    private $doctrine;
-    /** @var EntityManagerInterface **/
-    protected $manager;
-    /** @var ContainerInterface **/
-    protected $container;
-	/** @var string  */
-    protected $separator = ':';
+    private string $prefix = 'seed';
+    private string $seedName;
+    private ManagerRegistry $doctrine;
+    protected EntityManagerInterface $manager;
+    protected string $separator = ':';
 
-	public function __construct(ContainerInterface $container)
+    public function __construct(ManagerRegistry $doctrine)
 	{
-		$this->container = $container;
-		$this->doctrine = $container->get('doctrine');
+        $this->doctrine = $doctrine;
 		$this->manager = $this->doctrine->getManager();
 		parent::__construct();
 	}
@@ -80,15 +73,9 @@ class SeedCore extends Command
     }
 
 	/**
-	 * execute
 	 * Execute the seed method according to the method argument (load/unload).
-	 *
-	 * @param InputInterface $input
-	 * @param OutputInterface $output
-	 *
-	 * @return SeedCore
 	 */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $method = $input->getArgument('method') ?: 'load';
 
@@ -107,12 +94,11 @@ class SeedCore extends Command
 	 * disableDoctrineLogging
 	 * Shortcut to disable doctrine logging, useful when loading big seeds to
 	 * avoid memory leaks.
-	 *
-	 * @return SeedCore
+     * @throws ContainerExceptionInterface|NotFoundExceptionInterface
 	 */
     protected function disableDoctrineLogging(): SeedCore
     {
-        $this->container->get('doctrine')
+        $this->doctrine
             ->getConnection()
             ->getConfiguration()
             ->setSQLLogger(null);

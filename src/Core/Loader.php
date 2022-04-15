@@ -14,7 +14,6 @@ class Loader extends Container
     use ContainerAwareTrait;
 
 	/**
-	 * @param Application $application
 	 * @throws ReflectionException
 	 */
 	public function loadSeeds(Application $application)
@@ -40,8 +39,9 @@ class Loader extends Container
 
 	    	$r = new ReflectionClass(sprintf('%s\%s', $this->container->getParameter('seed.namespace'), $className));
 		    if ($r->getParentClass()->getName() == 'Evotodi\SeedBundle\Command\Seed' && !$r->isAbstract() && ($r->hasMethod('load') || $r->hasMethod('unload'))) {
-		    	$application->add(
-				    $r->newInstanceArgs([$this->container])
+                /** @noinspection PhpParamsInspection */
+                $application->add(
+				    $r->newInstanceArgs([$this->container->get('doctrine')])
 			    );
 		    }
 	    }

@@ -6,7 +6,7 @@ use Evotodi\SeedBundle\Core\Seeds;
 
 final class LoadSeedsCommand extends Seeds
 {
-	private $method;
+	private string $method;
 
 	protected function configure()
     {
@@ -14,8 +14,8 @@ final class LoadSeedsCommand extends Seeds
         parent::configure();
     }
 
-	public function getMethod()
-	{
+	public function getMethod(): string
+    {
 		return $this->method;
 	}
 
