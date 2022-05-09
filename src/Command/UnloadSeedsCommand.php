@@ -4,7 +4,6 @@ namespace Evotodi\SeedBundle\Command;
 
 use Evotodi\SeedBundle\Core\SeedCoreCommand;
 use Symfony\Component\Console\Attribute\AsCommand;
-use Symfony\Component\Console\Input\InputArgument;
 
 #[AsCommand(
     name: 'seed:unload',

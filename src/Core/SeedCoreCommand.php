@@ -25,6 +25,7 @@ class SeedCoreCommand extends Command implements ContainerAwareInterface
         return 'evo_core_seed';
     }
 
+    /** @noinspection PhpUnused */
     public static function getOrder(): int
     {
         return 0;
@@ -47,10 +48,13 @@ class SeedCoreCommand extends Command implements ContainerAwareInterface
             ->addOption('skip', '-s', InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Seed(s) to skip')
             ->addOption('break', '-b', InputOption::VALUE_NONE, 'Stop on failed seed')
             ->addOption('debug', '-d', InputOption::VALUE_NONE, 'Debug seed ordering without making changes')
-            ->addOption('from', '-f', InputOption::VALUE_REQUIRED, 'Start from seed');
+            ->addOption('from', '-f', InputOption::VALUE_REQUIRED, 'Start from seed')
             ;
     }
 
+    /**
+     * @throws Exception
+     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
@@ -189,6 +193,7 @@ class SeedCoreCommand extends Command implements ContainerAwareInterface
 
     /**
      * @throws Exception
+     * @noinspection PhpUnusedParameterInspection
      */
     public function load(InputInterface $input, OutputInterface $output): int
     {
@@ -197,6 +202,7 @@ class SeedCoreCommand extends Command implements ContainerAwareInterface
 
     /**
      * @throws Exception
+     * @noinspection PhpUnusedParameterInspection
      */
     public function unload(InputInterface $input, OutputInterface $output): int
     {
