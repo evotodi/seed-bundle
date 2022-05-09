@@ -1,3 +1,0 @@
-evo_seed:
-    directory: 'tests/fixtures/Seeds'
-    namespace: 'Evotodi\SeedBundle\Tests\fixtures\Seeds'

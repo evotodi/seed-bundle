@@ -2,22 +2,18 @@
 
 namespace Evotodi\SeedBundle\Command;
 
-use Evotodi\SeedBundle\Core\Seeds;
+use Evotodi\SeedBundle\Core\SeedCoreCommand;
+use Symfony\Component\Console\Attribute\AsCommand;
 
-final class LoadSeedsCommand extends Seeds
+#[AsCommand(
+    name: 'seed:load',
+    description: 'Load a seed',
+)]
+final class LoadSeedsCommand extends SeedCoreCommand
 {
-	private string $method;
-
-	protected function configure()
+	protected function configure(): void
     {
         $this->method = 'load';
         parent::configure();
     }
-
-	public function getMethod(): string
-    {
-		return $this->method;
-	}
-
-
 }

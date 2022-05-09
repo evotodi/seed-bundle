@@ -1,31 +1,23 @@
 services:
-    seed.loader:
-        class: 'Evotodi\SeedBundle\Core\Loader'
-        calls:
-            - [ setContainer, [ '@service_container' ] ]
-        public: true
+  seed.registry:
+    class: 'Evotodi\SeedBundle\Core\SeedRegistry'
+    public: true
 
-    seed.seeds:
-        class: 'Evotodi\SeedBundle\Core\Seeds'
+  seed.seed_core_command:
+    class: 'Evotodi\SeedBundle\Core\SeedCoreCommand'
+    calls:
+      - [ setContainer, [ '@service_container' ] ]
 
-    seed.load_seeds_command:
-        class: 'Evotodi\SeedBundle\Command\LoadSeedsCommand'
-        parent: 'seed.seeds'
-        tags: [ { name: 'console.command' } ]
-        public: true
+  seed.load_seeds_command:
+    class: 'Evotodi\SeedBundle\Command\LoadSeedsCommand'
+    tags:
+      - {name: 'console.command'}
+    parent: seed.seed_core_command
+    public: true
 
-    seed.unload_seeds_command:
-        class: 'Evotodi\SeedBundle\Command\UnloadSeedsCommand'
-        parent: 'seed.seeds'
-        tags: [ { name: 'console.command' } ]
-        public: true
-
-    seed.extension.skip:
-        class: 'Evotodi\SeedBundle\Extensions\Skip'
-        tags: [ {name: 'seed.extension', priority: 1 } ]
-    seed.extension.order:
-        class: 'Evotodi\SeedBundle\Extensions\Order'
-        tags: [ {name: 'seed.extension', priority: 1 } ]
-    seed.extension.matches:
-        class: 'Evotodi\SeedBundle\Extensions\Matches'
-        tags: [ {name: 'seed.extension', priority: 0 } ]
+  seed.unload_seeds_command:
+    class: 'Evotodi\SeedBundle\Command\UnloadSeedsCommand'
+    tags:
+      - { name: 'console.command' }
+    parent: seed.seed_core_command
+    public: true

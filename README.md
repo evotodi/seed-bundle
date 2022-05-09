@@ -42,13 +42,13 @@ The `Seed` class is a `Command` and :
 
 namespace App\Seeds;
 
-use Evotodi\SeedBundle\Command\Seed;
+use Evotodi\SeedBundle\Command\AbstractSeed;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 use App\Entity\User;
 
-class UserSeed extends Seed
+class UserSeed extends AbstractSeed
 {
 
     protected function configure()

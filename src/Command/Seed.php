@@ -2,13 +2,15 @@
 
 namespace Evotodi\SeedBundle\Command;
 
-use Evotodi\SeedBundle\Core\SeedCore;
-use Evotodi\SeedBundle\Model\SeedInterface;
+use Evotodi\SeedBundle\Core\SeedCoreCommand;
+use Symfony\Component\Console\Input\InputArgument;
 
-abstract class Seed extends SeedCore implements SeedInterface
+class Seed extends SeedCoreCommand
 {
-    public function getOrder(): int
+    protected function configure(): void
     {
-        return 0;
+        $this->method = null;
+        $this->setName(sprintf('seed:%s', $this->seedName()));
+        $this->addArgument('method', InputArgument::REQUIRED, 'load/unload seed');
     }
 }

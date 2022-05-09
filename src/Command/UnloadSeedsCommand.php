@@ -2,22 +2,19 @@
 
 namespace Evotodi\SeedBundle\Command;
 
-use Evotodi\SeedBundle\Core\Seeds;
+use Evotodi\SeedBundle\Core\SeedCoreCommand;
+use Symfony\Component\Console\Attribute\AsCommand;
+use Symfony\Component\Console\Input\InputArgument;
 
-final class UnloadSeedsCommand extends Seeds
+#[AsCommand(
+    name: 'seed:unload',
+    description: 'Unload a seed',
+)]
+final class UnloadSeedsCommand extends SeedCoreCommand
 {
-	private string $method;
-
-	protected function configure()
+	protected function configure(): void
     {
         $this->method = 'unload';
         parent::configure();
     }
-
-	public function getMethod(): string
-    {
-		return $this->method;
-	}
-
-
 }
