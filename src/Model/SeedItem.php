@@ -16,4 +16,9 @@ class SeedItem
         $this->order = $order;
         $this->manual = $manual;
     }
+
+    public function getClassName(): string
+    {
+        return get_class($this->classRef);
+    }
 }

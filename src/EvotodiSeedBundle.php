@@ -2,7 +2,6 @@
 
 namespace Evotodi\SeedBundle;
 
-
 use Evotodi\SeedBundle\DependencyInjection\Compiler\SeedPass;
 use Evotodi\SeedBundle\DependencyInjection\EvotodiSeedExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

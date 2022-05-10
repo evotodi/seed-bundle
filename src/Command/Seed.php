@@ -2,15 +2,9 @@
 
 namespace Evotodi\SeedBundle\Command;
 
-use Evotodi\SeedBundle\Core\SeedCoreCommand;
-use Symfony\Component\Console\Input\InputArgument;
+use Evotodi\SeedBundle\Core\ManualSeedCommand;
+use Evotodi\SeedBundle\Interfaces\SeedInterface;
 
-class Seed extends SeedCoreCommand
+abstract class Seed extends ManualSeedCommand implements SeedInterface
 {
-    protected function configure(): void
-    {
-        $this->method = null;
-        $this->setName(sprintf('seed:%s', $this->seedName()));
-        $this->addArgument('method', InputArgument::REQUIRED, 'load/unload seed');
-    }
 }
