@@ -13,16 +13,27 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class SeedCoreCommand extends Command implements ContainerAwareInterface
+class SeedCoreCommand extends Command
 {
+    public const CORE_SEED_NAME = 'evo_core_seed';
+
     protected ?string $method = 'load';
-    protected ?ContainerInterface $container;
     protected bool $manual = false;
     protected ManagerRegistry $manager;
-    public const CORE_SEED_NAME = 'evo_core_seed';
+    protected SeedRegistry $registry;
+
+    /** @noinspection PhpUnused */
+    public function setManager(ManagerRegistry $manager)
+    {
+        $this->manager = $manager;
+    }
+
+    /** @noinspection PhpUnused */
+    public function setRegistry(SeedRegistry $registry)
+    {
+        $this->registry = $registry;
+    }
 
     public static function seedName(): string
     {
@@ -38,14 +49,6 @@ class SeedCoreCommand extends Command implements ContainerAwareInterface
     private function getSeedName(): string
     {
         return preg_replace('/^seed:/', '', $this->getName());
-    }
-
-    public function setContainer(ContainerInterface $container = null)
-    {
-        $this->container = $container;
-        if(!is_null($container)){
-            $this->manager = $container->get('doctrine');
-        }
     }
 
     public function getManager(string $name = null): ObjectManager
@@ -72,13 +75,10 @@ class SeedCoreCommand extends Command implements ContainerAwareInterface
         $this->baseConfigure();
     }
 
-    /**
-     * @throws Exception
-     */
+
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $registry = $this->container->get('seed.registry');
         $debug = $input->getOption('debug');
 
         $seedArgs = [];
@@ -86,7 +86,7 @@ class SeedCoreCommand extends Command implements ContainerAwareInterface
             /** Add seeds from args to seedLoadNames */
             $seedArgs = $input->getArgument('seeds');
             if(empty($seedArgs)){
-                $seedArgs = $registry->keys();
+                $seedArgs = $this->registry->keys();
             }
         }else{
             /** Else add single command seed to seedLoadNames */
@@ -106,10 +106,10 @@ class SeedCoreCommand extends Command implements ContainerAwareInterface
         $from = $input->getOption('from');
         if($from) {
             $from = strtolower($from);
-            if (!$registry->has($from)) {
-                throw new InvalidArgumentException(sprintf("Invalid from seed %s! Valid seeds are '%s'", $from, join(", '", $registry->keys())));
+            if (!$this->registry->has($from)) {
+                throw new InvalidArgumentException(sprintf("Invalid from seed %s! Valid seeds are '%s'", $from, join(", '", $this->registry->keys())));
             }
-            $io->text(sprintf('Starting at seed %s', get_class($registry->get($from)['class'])));
+            $io->text(sprintf('Starting at seed %s', get_class($this->registry->get($from)['class'])));
         }
 
         /** Check if seed skips is valid */
@@ -117,8 +117,8 @@ class SeedCoreCommand extends Command implements ContainerAwareInterface
         if(!empty($skips)){
             foreach ($skips as $sKey => $skip){
                 $skips[$sKey] = strtolower($skip);
-                if (!$registry->has(strtolower($skip))) {
-                    throw new InvalidArgumentException(sprintf("Invalid skip seed %s! Valid seeds are '%s'", $skip, join(", '", $registry->keys())));
+                if (!$this->registry->has(strtolower($skip))) {
+                    throw new InvalidArgumentException(sprintf("Invalid skip seed %s! Valid seeds are '%s'", $skip, join(", '", $this->registry->keys())));
                 }
             }
         }
@@ -126,7 +126,7 @@ class SeedCoreCommand extends Command implements ContainerAwareInterface
         /** Gather all seeds to process */
         $seedsToProcess = [];
         foreach ($seedArgs as $seedArg) {
-            foreach ($registry->glob($seedArg) as $seedName){
+            foreach ($this->registry->glob($seedArg) as $seedName){
                 $seedsToProcess[] = $seedName;
             }
         }
@@ -135,10 +135,10 @@ class SeedCoreCommand extends Command implements ContainerAwareInterface
         /** Check if seed names are valid and create SeedItems */
         $seedItems = [];
         foreach ($seedsToProcess as $seedName) {
-            if (!$registry->has($seedName)) {
-                throw new InvalidArgumentException(sprintf("Invalid seed '%s'! Valid seeds are '%s'", $seedName, join(", '", $registry->keys())));
+            if (!$this->registry->has($seedName)) {
+                throw new InvalidArgumentException(sprintf("Invalid seed '%s'! Valid seeds are '%s'", $seedName, join(", '", $this->registry->keys())));
             }
-            $regItem = $registry->get($seedName);
+            $regItem = $this->registry->get($seedName);
             $seedItems[] = new SeedItem($regItem['name'], $regItem['class'], $regItem['order'], $this->manual);
         }
 
@@ -188,6 +188,7 @@ class SeedCoreCommand extends Command implements ContainerAwareInterface
                     }else {
                         $io->text(sprintf('Starting load %s order %s...', $seedItem->getClassName(), $seedItem->order));
                         if ($seedItem->manual) {
+                            /** @noinspection PhpUnhandledExceptionInspection */
                             $retCode = $this->load($input, $output);
                         } else {
                             $cls = $seedItem->classRef;
@@ -202,6 +203,7 @@ class SeedCoreCommand extends Command implements ContainerAwareInterface
                     }else {
                         $io->text(sprintf('Starting unload %s order %s...', $seedItem->getClassName(), $seedItem->order));
                         if ($seedItem->manual) {
+                            /** @noinspection PhpUnhandledExceptionInspection */
                             $retCode = $this->unload($input, $output);
                         } else {
                             $cls = $seedItem->classRef;
@@ -245,9 +247,8 @@ class SeedCoreCommand extends Command implements ContainerAwareInterface
 
         return Command::SUCCESS;
     }
-
     /**
-     * @throws Exception
+     * @noinspection PhpUnhandledExceptionInspection
      * @noinspection PhpUnusedParameterInspection
      */
     public function load(InputInterface $input, OutputInterface $output): int
@@ -256,11 +257,12 @@ class SeedCoreCommand extends Command implements ContainerAwareInterface
     }
 
     /**
-     * @throws Exception
+     * @noinspection PhpUnhandledExceptionInspection
      * @noinspection PhpUnusedParameterInspection
      */
     public function unload(InputInterface $input, OutputInterface $output): int
     {
+
         throw new Exception("Core seed unload should not be called");
     }
 

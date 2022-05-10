@@ -8,16 +8,19 @@ use Symfony\Component\Console\Output\OutputInterface;
 interface SeedInterface
 {
     /**
+     * @required
      * return the seed name
      */
     public static function seedName(): string;
 
     /**
+     * @required
      * Load a seed.
      */
     public function load(InputInterface $input, OutputInterface $output): int;
 
     /**
+     * @required
      * Unload a seed.
      */
     public function unload(InputInterface $input, OutputInterface $output): int;

@@ -3,7 +3,6 @@
 namespace Evotodi\SeedBundle\Tests\App;
 
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
-use Evotodi\SeedBundle\DependencyInjection\Compiler\SeedPass;
 use Evotodi\SeedBundle\EvotodiSeedBundle;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
@@ -32,18 +31,6 @@ class AppKernel extends Kernel
         return $bundles;
     }
 
-	//public function getCacheDir(): string
-    //{
-	//	return __DIR__.'../../var/cache/test';
-	//}
-
-	/**
-	 * @inheritDoc
-	 */
-	//protected function configureRoutes(RouteCollectionBuilder $routes)
-	//{
-	//}
-
 	/**
 	 * @inheritDoc
 	 * @throws Exception
@@ -52,10 +39,4 @@ class AppKernel extends Kernel
 	{
 		$loader->load(__DIR__.'/config.yml');
 	}
-
-    //protected function build(ContainerBuilder $container)
-    //{
-    //    parent::build($container);
-    //    //$container->addCompilerPass(new SeedPass());
-    //}
 }

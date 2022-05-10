@@ -6,7 +6,8 @@ services:
   seed.seed_core_command:
     class: 'Evotodi\SeedBundle\Core\SeedCoreCommand'
     calls:
-      - [ setContainer, [ '@service_container' ] ]
+      - [ setManager, [ '@doctrine' ] ]
+      - [ setRegistry, [ '@seed.registry' ] ]
 
   seed.load_seeds_command:
     class: 'Evotodi\SeedBundle\Command\LoadSeedsCommand'

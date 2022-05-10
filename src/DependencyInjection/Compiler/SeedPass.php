@@ -27,7 +27,8 @@ class SeedPass implements CompilerPassInterface
         foreach ($taggedServices as $id => $tags){
             $seedItem = $container->findDefinition($id);
             if(!$seedItem->getClass() instanceof SeedCoreCommand) {
-                $seedItem->addMethodCall('setContainer', [new Reference('service_container')]);
+                $seedItem->addMethodCall('setManager', [new Reference('doctrine')]);
+                $seedItem->addMethodCall('setRegistry', [new Reference('seed.registry')]);
             }
             try {
                 $rc = new ReflectionClass($id);
