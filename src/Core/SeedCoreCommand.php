@@ -15,6 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Webmozart\Glob\Glob;
 
 class SeedCoreCommand extends Command implements ContainerAwareInterface
 {
@@ -60,7 +61,7 @@ class SeedCoreCommand extends Command implements ContainerAwareInterface
             ->addOption('skip', '-s', InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Seed(s) to skip')
             ->addOption('break', '-b', InputOption::VALUE_NONE, 'Stop on failed seed')
             ->addOption('debug', '-d', InputOption::VALUE_NONE, 'Debug seed ordering without making changes')
-            ->addOption('from', '-f', InputOption::VALUE_REQUIRED, 'Start from seed')
+            ->addOption('from', '-f', InputOption::VALUE_REQUIRED, 'Start from seed. Unavailable for glob matching')
         ;
     }
 
@@ -81,16 +82,16 @@ class SeedCoreCommand extends Command implements ContainerAwareInterface
         $registry = $this->container->get('seed.registry');
         $debug = $input->getOption('debug');
 
-        $seedLoadNames = [];
+        $seedArgs = [];
         if($input->hasArgument('seeds')){
             /** Add seeds from args to seedLoadNames */
-            $seedLoadNames = $input->getArgument('seeds');
-            if(empty($seedLoadNames)){
-                $seedLoadNames = $registry->keys();
+            $seedArgs = $input->getArgument('seeds');
+            if(empty($seedArgs)){
+                $seedArgs = $registry->keys();
             }
         }else{
             /** Else add single command seed to seedLoadNames */
-            $seedLoadNames[] = $this->getSeedName();
+            $seedArgs[] = $this->getSeedName();
         }
 
         if($input->hasArgument('method')){
@@ -105,28 +106,40 @@ class SeedCoreCommand extends Command implements ContainerAwareInterface
         /** Check if seed from is valid */
         $from = $input->getOption('from');
         if($from) {
+            $from = strtolower($from);
             if (!$registry->has($from)) {
                 throw new InvalidArgumentException(sprintf("Invalid from seed %s! Valid seeds are '%s'", $from, join(", '", $registry->keys())));
             }
             $io->text(sprintf('Starting at seed %s', get_class($registry->get($from)['class'])));
         }
 
+        /** Check if seed skips is valid */
         $skips = $input->getOption('skip');
         if(!empty($skips)){
-            foreach ($skips as $skip){
-                if (!$registry->has($skip)) {
+            foreach ($skips as $sKey => $skip){
+                $skips[$sKey] = strtolower($skip);
+                if (!$registry->has(strtolower($skip))) {
                     throw new InvalidArgumentException(sprintf("Invalid skip seed %s! Valid seeds are '%s'", $skip, join(", '", $registry->keys())));
                 }
             }
         }
 
+        /** Gather all seeds to process */
+        $seedsToProcess = [];
+        foreach ($seedArgs as $seedArg) {
+            foreach ($registry->glob($seedArg) as $seedName){
+                $seedsToProcess[] = $seedName;
+            }
+        }
+        $seedsToProcess = array_unique($seedsToProcess);
+
         /** Check if seed names are valid and create SeedItems */
         $seedItems = [];
-        foreach ($seedLoadNames as $seedLoadName) {
-            if (!$registry->has($seedLoadName)) {
-                throw new InvalidArgumentException(sprintf("Invalid seed %s! Valid seeds are '%s'", $seedLoadName, join(", '", $registry->keys())));
+        foreach ($seedsToProcess as $seedName) {
+            if (!$registry->has($seedName)) {
+                throw new InvalidArgumentException(sprintf("Invalid seed '%s'! Valid seeds are '%s'", $seedName, join(", '", $registry->keys())));
             }
-            $regItem = $registry->get($seedLoadName);
+            $regItem = $registry->get($seedName);
             $seedItems[] = new SeedItem($regItem['name'], $regItem['class'], $regItem['order'], $this->manual);
         }
 
@@ -137,8 +150,8 @@ class SeedCoreCommand extends Command implements ContainerAwareInterface
 
         /** Check for seeds to process */
         if(count($seedItems) == 0){
-            $io->warning("No seed found");
-            return Command::INVALID;
+            $io->warning("No seeds found");
+            return Command::FAILURE;
         }
 
         $processStartTime = microtime(true);

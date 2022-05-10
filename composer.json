@@ -21,7 +21,8 @@
         "doctrine/doctrine-bundle": "^2.0",
         "doctrine/orm": "^2.0",
         "symfony/yaml": "^5.4|^6.0",
-        "symfony/doctrine-bridge": "^5.4|^6.0"
+        "symfony/doctrine-bridge": "^5.4|^6.0",
+        "webmozart/glob": "^4.5"
     },
     "require-dev": {
         "symfony/config": "^5.4|^6.0",

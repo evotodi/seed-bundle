@@ -1,0 +1,16 @@
+# Tests/Controller/App/config.yml
+framework:
+    test: true
+    secret: 'test'
+    router:
+        utf8: true
+doctrine:
+    dbal:
+        memory: true
+    orm: ~
+services:
+    Evotodi\SeedBundle\Tests\fixtures\:
+        resource: '../fixtures/*'
+        tags:
+            - { name: 'console.command' }
+            - { name: 'seed.seed' }
