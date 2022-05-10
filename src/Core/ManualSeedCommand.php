@@ -3,7 +3,6 @@
 namespace Evotodi\SeedBundle\Core;
 
 use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputOption;
 
 class ManualSeedCommand extends SeedCoreCommand
 {

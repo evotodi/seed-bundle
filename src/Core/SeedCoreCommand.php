@@ -15,7 +15,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Webmozart\Glob\Glob;
 
 class SeedCoreCommand extends Command implements ContainerAwareInterface
 {
@@ -269,6 +268,7 @@ class SeedCoreCommand extends Command implements ContainerAwareInterface
      * disableDoctrineLogging
      * Shortcut to disable doctrine logging, useful when loading big seeds to
      * avoid memory leaks.
+     * @noinspection PhpUnused
      */
     protected function disableDoctrineLogging()
     {
