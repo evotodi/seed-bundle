@@ -75,7 +75,6 @@ class SeedCoreCommand extends Command
         $this->baseConfigure();
     }
 
-
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
@@ -247,6 +246,7 @@ class SeedCoreCommand extends Command
 
         return Command::SUCCESS;
     }
+
     /**
      * @noinspection PhpUnhandledExceptionInspection
      * @noinspection PhpUnusedParameterInspection
