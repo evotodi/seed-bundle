@@ -187,6 +187,10 @@ It is suggested to used the `--debug` flag to verify the order of loading or seq
 ## Manual seed commands
 Calling `seed:user load` (from example above) will load only the user seed. Conversely calling `seed:user unload` will unload it.  
 
+## Example project
+In the example folder is a project that can be used to experiment with the Seed bundle.  
+It shows how to seed a database or flat file. 
+
 ## Thanks
 Thanks to soyuka/SeedBundle
 
