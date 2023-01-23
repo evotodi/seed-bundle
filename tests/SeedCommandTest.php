@@ -10,6 +10,7 @@ use Symfony\Component\Filesystem\Filesystem;
 class SeedCommandTest extends KernelTestCase
 {
     static ?string $cacheDir = null;
+    private Application $application;
 
     protected function setUp(): void
     {

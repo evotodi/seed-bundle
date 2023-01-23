@@ -4,6 +4,7 @@ framework:
     secret: 'test'
     router:
         utf8: true
+    http_method_override: false
 doctrine:
     dbal:
         memory: true
