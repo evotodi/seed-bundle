@@ -14,7 +14,7 @@ class EvotodiSeedExtension extends Extension
 	/**
 	 * @throws Exception
 	 */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $container->registerForAutoconfiguration(SeedInterface::class)->addTag('seed.seed');
 
