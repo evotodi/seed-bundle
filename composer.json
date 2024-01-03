@@ -1,6 +1,6 @@
 {
     "name": "evotodi/seed-bundle",
-    "description": "Seeder for symfony 6",
+    "description": "Seeder for symfony 6/7",
     "type": "symfony-bundle",
     "license": "MIT",
     "authors": [
