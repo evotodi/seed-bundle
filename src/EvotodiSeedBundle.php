@@ -19,8 +19,8 @@ class EvotodiSeedBundle extends Bundle
 		return $this->extension;
 	}
 
-	public function build(ContainerBuilder $container)
-	{
+	public function build(ContainerBuilder $container): void
+    {
 		$this->container = $container;
 
         parent::build($container);
