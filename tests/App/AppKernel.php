@@ -22,21 +22,19 @@ class AppKernel extends Kernel
 
     public function registerBundles(): array
     {
-        $bundles = array(
+        return array(
             new FrameworkBundle(),
             new DoctrineBundle(),
             new EvotodiSeedBundle(),
         );
-
-        return $bundles;
     }
 
 	/**
 	 * @inheritDoc
 	 * @throws Exception
 	 */
-	protected function configureContainer(ContainerBuilder $c, LoaderInterface $loader)
-	{
+	protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader): void
+    {
 		$loader->load(__DIR__.'/config.yml');
 	}
 }

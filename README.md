@@ -182,10 +182,10 @@ Seeds:
 * seed-e order 2
 
 Calling `seed:load --from seed-c` will start loading with seed-c but since seed-b and seed-d have the same order one or both may or may not be loaded depending on what order they were loaded into the registry.     
-It is suggested to used the `--debug` flag to verify the order of loading or sequentially order your seeds.
+It is suggested to use the `--debug` flag to verify the order of loading or sequentially order your seeds.
 
 ## Manual seed commands
-Calling `seed:user load` (from example above) will load only the user seed. Conversely calling `seed:user unload` will unload it.  
+Calling `seed:user load` (from example above) will load only the user seed. Conversely, calling `seed:user unload` will unload it.  
 
 ## Example project
 In the example folder is a project that can be used to experiment with the Seed bundle.  
@@ -204,6 +204,8 @@ Please create detailed issues and PRs.
 This package is free software distributed under the terms of the [MIT license](LICENSE).
 
 ## Updates
+* 2024-01-16
+  * Fix depreciations for PHP 8.4
 * 2022-05-10 ![](https://img.shields.io/badge/v6.0-Breaking%20Change-red)
   * Breaking changes to previous versions as this is mostly a re-write of the bundle.
   * Seeds no longer need to have a name ending in seed

@@ -24,13 +24,13 @@ class SeedCoreCommand extends Command
     protected SeedRegistry $registry;
 
     /** @noinspection PhpUnused */
-    public function setManager(ManagerRegistry $manager)
+    public function setManager(ManagerRegistry $manager): void
     {
         $this->manager = $manager;
     }
 
     /** @noinspection PhpUnused */
-    public function setRegistry(SeedRegistry $registry)
+    public function setRegistry(SeedRegistry $registry): void
     {
         $this->registry = $registry;
     }
@@ -51,12 +51,12 @@ class SeedCoreCommand extends Command
         return preg_replace('/^seed:/', '', $this->getName());
     }
 
-    public function getManager(string $name = null): ObjectManager
+    public function getManager(?string $name = null): ObjectManager
     {
         return $this->manager->getManager($name);
     }
 
-    protected function baseConfigure()
+    protected function baseConfigure(): void
     {
         $this
             ->setName(sprintf('seed:%s', $this->seedName()))
@@ -272,7 +272,7 @@ class SeedCoreCommand extends Command
      * avoid memory leaks.
      * @noinspection PhpUnused
      */
-    protected function disableDoctrineLogging()
+    protected function disableDoctrineLogging(): void
     {
         $this->manager
             ->getConnection()
