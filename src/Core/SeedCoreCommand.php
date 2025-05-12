@@ -274,9 +274,14 @@ class SeedCoreCommand extends Command
      */
     protected function disableDoctrineLogging(): void
     {
-        $this->manager
-            ->getConnection()
-            ->getConfiguration()
-            ->setSQLLogger(null);
+        $config = $this->manager->getConnection()->getConfiguration();
+        if (method_exists($config,'setSQLLogger')) {
+            $config->setSQLLogger(null);
+        } else {
+            $config->setMiddlewares(array_filter(
+                $config->getMiddlewares(), 
+                fn($middleware) => !($middleware instanceof \Doctrine\DBAL\Logging\Middleware)
+            ));
+        }
     }
 }
