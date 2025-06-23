@@ -10,6 +10,8 @@ doctrine:
         memory: true
     orm:
         enable_lazy_ghost_objects: true
+        controller_resolver:
+            auto_mapping: false
 services:
     Evotodi\SeedBundle\Tests\fixtures\:
         resource: '../fixtures/*'
