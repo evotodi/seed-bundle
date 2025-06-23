@@ -275,10 +275,6 @@ class SeedCoreCommand extends Command
      */
     protected function disableDoctrineLogging(): void
     {
-//        $this->manager
-//            ->getConnection()
-//            ->getConfiguration()
-//            ->setSQLLogger(null);
         $conf = $this->manager->getConnection()->getConfiguration();
 
         $middlewares = $conf->getMiddlewares();
