@@ -2,6 +2,7 @@
 
 namespace Evotodi\SeedBundle\Core;
 
+use Doctrine\DBAL\Logging\Middleware;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
 use Evotodi\SeedBundle\Model\SeedItem;
@@ -280,7 +281,7 @@ class SeedCoreCommand extends Command
         } else {
             $config->setMiddlewares(array_filter(
                 $config->getMiddlewares(),
-                fn($middleware) => !($middleware instanceof \Doctrine\DBAL\Logging\Middleware)
+                fn($middleware) => !($middleware instanceof Middleware)
             ));
         }
     }
