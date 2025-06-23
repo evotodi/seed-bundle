@@ -2,6 +2,7 @@
 
 namespace Evotodi\SeedBundle\Core;
 
+use Doctrine\DBAL\Logging\Middleware;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
 use Evotodi\SeedBundle\Model\SeedItem;
@@ -274,9 +275,15 @@ class SeedCoreCommand extends Command
      */
     protected function disableDoctrineLogging(): void
     {
-        $this->manager
-            ->getConnection()
-            ->getConfiguration()
-            ->setSQLLogger(null);
+//        $this->manager
+//            ->getConnection()
+//            ->getConfiguration()
+//            ->setSQLLogger(null);
+        $conf = $this->manager->getConnection()->getConfiguration();
+
+        $middlewares = $conf->getMiddlewares();
+        $middlewares = array_filter($middlewares, fn($mid) => !($mid instanceof Middleware));
+
+        $conf->setMiddlewares($middlewares);
     }
 }
