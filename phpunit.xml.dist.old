@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd" colors="true" bootstrap="./tests/bootstrap.php">
+  <coverage>
+    <include>
+      <directory>./src</directory>
+    </include>
+    <exclude>
+      <directory>./Resources</directory>
+      <directory>./Tests</directory>
+      <directory>./vendor</directory>
+    </exclude>
+  </coverage>
+  <php>
+    <ini name="error_reporting" value="-1"/>
+    <ini name="intl.default_locale" value="en"/>
+    <ini name="intl.error_level" value="0"/>
+    <ini name="memory_limit" value="-1"/>
+    <server name="KERNEL_DIR" value="./src"/>
+    <server name="KERNEL_CLASS" value="Evotodi\SeedBundle\Tests\App\AppKernel" />
+    <server name="APP_ENV" value="test" force="true"/>
+  </php>
+  <testsuites>
+    <testsuite name="Test suite">
+      <directory>./tests</directory>
+    </testsuite>
+  </testsuites>
+</phpunit>

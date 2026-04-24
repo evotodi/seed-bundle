@@ -1,6 +1,6 @@
 {
     "name": "evotodi/seed-bundle",
-    "description": "Seeder for symfony 6/7",
+    "description": "Seeder for Symfony 7/8",
     "type": "symfony-bundle",
     "license": "MIT",
     "authors": [
@@ -15,20 +15,22 @@
     ],
     "require": {
         "php": "^8",
-        "symfony/framework-bundle": "^6.0|^7.0",
-        "symfony/console": "^6.0|^7.0",
-        "symfony/finder": "^6.0|^7.0",
+        "symfony/framework-bundle": "^7.1|^8.0",
+        "symfony/console": "^7.1|^8.0",
+        "symfony/finder": "^7.1|^8.0",
         "doctrine/doctrine-bundle": "^2.0",
-        "doctrine/orm": "^2.0|^3.0",
-        "symfony/yaml": "^6.0|^7.0",
-        "symfony/doctrine-bridge": "^6.0|^7.0",
+        "doctrine/orm": "^3.0",
+        "symfony/yaml": "^7.1|^8.0",
+        "symfony/doctrine-bridge": "^7.1|^8.0",
         "webmozart/glob": "^4.5"
     },
     "require-dev": {
-        "symfony/config": "^6.0|^7.0",
-        "symfony/dependency-injection": "^6.0|^7.0",
-        "symfony/phpunit-bridge": "^6.0|^7.0"
-
+        "symfony/var-exporter": "^7.1|^8.0",
+        "symfony/config": "^7.1|^8.0",
+        "symfony/dependency-injection": "^7.1|^8.0",
+        "phpunit/phpunit": "^10.5|^11|^12|^13",
+        "symfony/phpunit-bridge": "^7.1|^8.0",
+        "symfony/test-pack": "^1.0"
     },
     "autoload": {
         "psr-4": {

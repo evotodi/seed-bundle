@@ -13,3 +13,4 @@ var/
 /tests/App/cache/
 /tests/App/App/config.yml
 /.phpunit.result.cache
+/.phpunit.cache/test-results

@@ -20,7 +20,7 @@ class EvotodiSeedExtension extends Extension
         $container->registerForAutoconfiguration(SeedInterface::class)->addTag('seed.seed');
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.yml');
+        $loader->load('services.yaml');
     }
 
 	public function getAlias(): string

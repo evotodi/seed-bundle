@@ -5,41 +5,30 @@ namespace Evotodi\SeedBundle\Tests;
 use Evotodi\SeedBundle\Core\SeedRegistry;
 use Generator;
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Exception\CommandNotFoundException;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\Filesystem\Filesystem;
 
+#[AllowMockObjectsWithoutExpectations]
 class SeedCommandTest extends KernelTestCase
 {
     static ?string $cacheDir = null;
     private Application $application;
 
-    protected function setUp(): void
-    {
-        $kernel = self::bootKernel();
-        $this->application = new Application($kernel);
-        self::$cacheDir = self::$kernel->getCacheDir();
-    }
-
     public static function tearDownAfterClass(): void
     {
         parent::tearDownAfterClass();
         /** Remove the cache dir */
-        if(!is_null(self::$cacheDir) and self::$cacheDir != '/') {
+        if (!is_null(self::$cacheDir) and self::$cacheDir != '/') {
             (new Filesystem())->remove(self::$cacheDir);
         }
     }
 
-    /** @dataProvider seedProvider */
-    public function testSeedsExist(string $seed)
-    {
-        $command = $this->application->find($seed);
-        $this->assertEquals($seed, $command->getName());
-    }
-
-    public function seedProvider(): Generator
+    public static function seedProvider(): Generator
     {
         yield 'Country Seed' => ['seed:country'];
         yield 'Glob Seed A' => ['seed:foo:bar'];
@@ -48,6 +37,13 @@ class SeedCommandTest extends KernelTestCase
         yield 'Street Seed' => ['seed:street'];
         yield 'Town Seed' => ['seed:town'];
         yield 'Fail Seed' => ['seed:fail'];
+    }
+
+    #[DataProvider('seedProvider')]
+    public function testSeedsExist(string $seed)
+    {
+        $command = $this->application->find($seed);
+        $this->assertEquals($seed, $command->getName());
     }
 
     public function testBadSeedNotExist()
@@ -259,7 +255,7 @@ class SeedCommandTest extends KernelTestCase
         $command = $this->application->find('seed:load');
 
         $commandTester = new CommandTester($command);
-        $commandTester->execute(['command' => $command->getName(), '-d' => true,  'seeds' => ['country']]);
+        $commandTester->execute(['command' => $command->getName(), '-d' => true, 'seeds' => ['country']]);
 
         $output = $commandTester->getDisplay();
 
@@ -289,6 +285,23 @@ class SeedCommandTest extends KernelTestCase
         $this->assertMatchesRegularExpression("/Seed done Evotodi\\\\SeedBundle\\\\Tests\\\\fixtures\\\\PostcodeSeed/", $output);
 
         $this->assertEquals(0, $commandTester->getStatusCode());
+    }
+
+    protected function setUp(): void
+    {
+        $kernel = self::bootKernel();
+        $this->application = new Application($kernel);
+        self::$cacheDir = self::$kernel->getCacheDir();
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+        while (set_exception_handler(fn() => null) !== null) {
+            restore_exception_handler();
+            restore_exception_handler();
+        }
+        restore_exception_handler();
     }
 
 }

@@ -35,6 +35,6 @@ class AppKernel extends Kernel
 	 */
 	protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader): void
     {
-		$loader->load(__DIR__.'/config.yml');
+		$loader->load(__DIR__.'/config.yaml');
 	}
 }
