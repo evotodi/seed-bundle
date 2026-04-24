@@ -30,7 +30,7 @@ The `Seed` class is a `Command` and :
 
 - Must extend `Evotodi\SeedBundle\Command\Seed`
 - Must return the seed name from the static `seedName` method
-- Seed naming must follow the colon seperated naming convention for symfony console commands.
+- Seed naming must follow the colon separated naming convention for symfony console commands.
 
 
 ```php
@@ -204,6 +204,9 @@ Please create detailed issues and PRs.
 This package is free software distributed under the terms of the [MIT license](LICENSE).
 
 ## Updates
+* 2026-04-24
+  * Dropped support for Symfony 6.
+  * Added support for Symfony 8.
 * 2024-01-16
   * Fix depreciations for PHP 8.4
 * 2022-05-10 ![](https://img.shields.io/badge/v6.0-Breaking%20Change-red)
